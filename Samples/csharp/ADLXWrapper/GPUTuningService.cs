@@ -18,6 +18,21 @@ namespace ADLXWrapper
             return value;
         }
 
+        public bool IsAtFactory(GPU gpu)
+        {
+            var isFactoryPtr = ADLX.new_boolP();
+            NativeInterface.IsAtFactory(gpu.NativeInterface, isFactoryPtr).ThrowIfError("IsAtFactory");
+            var value = ADLX.boolP_value(isFactoryPtr);
+            ADLX.delete_boolP(isFactoryPtr);
+
+            return value;
+        }
+
+        public void ResetToFactory(GPU gpu)
+        {
+            NativeInterface.ResetToFactory(gpu.NativeInterface).ThrowIfError("ResetToFactory");
+        }
+
         public ManualFanTuning GetManualFanTuning(GPU gpu)
         {
             var interfacePtr = ADLX.new_adlxInterfaceP_Ptr();
